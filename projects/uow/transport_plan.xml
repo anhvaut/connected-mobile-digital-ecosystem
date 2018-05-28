@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<plan>
+
+<transit_parameters using_strategy="yes" station_schedule_control="yes" demand_scale="2.5" average_vehicle_speed ="100" average_alighting_time="2" average_boarding_time="3" deceleration_time="10" aligting_fraction="0.3" scheduled_headway="900" headway_standard_deviation="300" ></transit_parameters>
+
+
+<vehicles>
+	<vehicle name="vehicle1" color="51,102,255" route_id="1" start_station="5" start_time="07:58:00" number_trip ="5" seat_capacity="50" standing_capacity="20">
+	</vehicle>
+        <vehicle name="vehicle2" color="255,0,51" route_id="1" start_station="5" start_time="08:13:00" number_trip ="4" seat_capacity="50" standing_capacity="20">
+	</vehicle>
+	<vehicle name="vehicle3" color="204,204,204" route_id="1" start_station="1" start_time="16:34:00" number_trip ="5" seat_capacity="50" standing_capacity="20">
+	</vehicle>
+	<vehicle name="vehicle4" color="0,255,102" route_id="1" start_station="1" start_time="16:49:00" number_trip ="4" seat_capacity="50" standing_capacity="20">
+	</vehicle>
+	<vehicle name="vehicle5" color="255,0,255" route_id="1" start_station="1" start_time="19:34:00" number_trip ="5" seat_capacity="50" standing_capacity="20">
+	</vehicle>
+</vehicles>
+</plan>

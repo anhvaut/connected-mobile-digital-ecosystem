@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<control_strategy>
+
+	<settings algorithm="holding" number_objectives="1" objectives="passenger wait time"></settings>
+
+</control_strategy>

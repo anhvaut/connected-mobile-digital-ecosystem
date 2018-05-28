@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<control_strategy>
+
+	<settings algorithm="ea" number_objectives="3" objectives="wait time, passenger comfort, action impact" generations="30" interation="100" batch_size="30" passenger_wait_time_weight="0.3" headway_weight="0.7" output_data="mo_ouput.csv" selected_bus="2" ></settings>
+
+</control_strategy>

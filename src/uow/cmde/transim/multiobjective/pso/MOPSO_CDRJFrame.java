@@ -1,0 +1,229 @@
+package uow.cmde.transim.multiobjective.pso;
+
+import java.awt.Dimension;
+import java.awt.Image;
+import java.awt.Toolkit;
+import java.util.ArrayList;
+import java.util.StringTokenizer;
+
+import org.jfree.chart.ChartPanel;
+import com.csvreader.CsvReader;
+
+/**
+ *
+ * @author  robson
+ */
+public class MOPSO_CDRJFrame extends javax.swing.JFrame implements Runnable{
+
+	 // Variables declaration - do not modify
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    // End of variables declaration
+    private Toolkit kit;
+    private Image frameIcon;
+    
+//    private static MOPSOJFrame instance;
+    private ChartPanel chartPanelExternalArchive;
+    private ChartPanel chartPanelSwarm;
+    //private MOPSO mopso;
+    private MOPSOPlotManager plotManager;
+	
+
+    public MOPSO_CDRJFrame( ) {
+
+        kit = Toolkit.getDefaultToolkit();
+        frameIcon = kit.getImage("./imagens/dsc.gif");
+
+        initComponents();
+
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        Dimension windowSize = this.getSize();
+        this.setLocation(Math.max(0, (screenSize.width - windowSize.width) / 2), Math.max(0, (screenSize.height - windowSize.height) / 2));
+
+        this.plotManager = new MOPSOPlotManager();
+        this.plotManager.setupPlotExternalArchive();
+        this.plotManager.setupPlotSwarm();
+        this.plotManager.setDebug(true);
+        
+        chartPanelExternalArchive = plotManager.getChartPanelExternalArchive();
+        chartPanelSwarm = plotManager.getChartPanelSwarm();
+
+        jPanel2.add( chartPanelExternalArchive, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 500, 500) );
+        jPanel4.add( chartPanelSwarm, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 500, 500) );
+
+        
+        this.setVisible(true);
+    }
+
+    public void readMOPSOData() throws Exception
+    {
+    		
+    	CsvReader csvReader= new CsvReader("D://transimOutput//mopso.csv");
+		csvReader.readHeaders();
+		
+		while (csvReader.readRecord())
+		{
+			
+			int interation = Integer.parseInt(csvReader.get("interation"));
+			String  externalArchive = csvReader.get("external_archive");
+			String swarm= csvReader.get("swarm");
+			
+			StringTokenizer stExternalArchive = new  StringTokenizer(externalArchive,";");
+			StringTokenizer stSwarm = new  StringTokenizer(swarm,";");
+			
+			ArrayList<Position> arrExternalArchive = new ArrayList<Position>();
+	    	Particle[] arrSwarm = new Particle[MOPSOParameters.SIZE_OF_SWARM];
+    	
+	        
+			while(stExternalArchive.hasMoreTokens()){
+					
+					String st = stExternalArchive.nextToken();
+					
+					StringTokenizer stFitness = new  StringTokenizer(st,"@");
+					
+					//System.out.println("Fitness:" + stFitness.nextToken() + "--" + stFitness.nextToken());
+					                                                                                                                                                                                                                                                                                                                                                                                      
+					double[] arrFitness = {Double.parseDouble(stFitness.nextToken()),
+											Double.parseDouble(stFitness.nextToken())};
+					
+					arrExternalArchive.add(new Position(arrFitness));	
+					
+					
+			}
+				
+			
+			
+			int i = 0;
+			while(stSwarm .hasMoreTokens()){
+				String st = stSwarm.nextToken();
+				StringTokenizer stFitness = new  StringTokenizer(st,"@");
+				
+				if(i==MOPSOParameters.SIZE_OF_SWARM) i=0;
+				
+				double[] arrFitness = {Double.parseDouble(stFitness.nextElement().toString()),
+										Double.parseDouble(stFitness.nextElement().toString())};
+				
+				Particle particle = new Particle(i, arrFitness);
+				arrSwarm[i] = particle;
+				i++;
+				
+			}
+			
+			
+			//ArrayList<Position> result = MOPSOUtil.retrivePositionsIncomparable(arrSwarm);
+			//System.out.println("stSwarm:" + stSwarm);
+			/*
+			for(Position p:result){
+				 double[] fitness1 = p.getFitness();
+				System.out.println(fitness1[0] + " @ " + fitness1[1]);
+			}*/
+			
+			plotManager.plotSwarm(arrSwarm, interation);
+			plotManager.plotExternalArchive(arrExternalArchive,interation);
+		
+			 try {
+	                Thread.sleep(100);
+	         }catch (InterruptedException ex) {
+	               System.out.println(ex.getMessage());
+	         }
+			
+		}
+		
+		
+		csvReader.close();
+		
+		
+        
+	     
+	        
+    }
+//    public static MOPSOJFrame getInstance() {
+//        if (instance == null) {
+//            instance = new MOPSOJFrame();
+//        }
+//        return instance;
+//    }
+
+    /** This method is called from within the constructor to
+     * initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is
+     * always regenerated by the Form Editor.
+     */
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">
+    private void initComponents() {
+
+        jPanel1 = new javax.swing.JPanel();
+        jPanel2 = new javax.swing.JPanel();
+        jPanel3 = new javax.swing.JPanel();
+        jPanel4 = new javax.swing.JPanel();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("MOPSO_CDR");
+        setIconImage(frameIcon);
+        setName("MOPSO"); // NOI18N
+
+        jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 500, 500));
+
+        jPanel3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jPanel4.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel4.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jPanel3.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 500, 500));
+
+        org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(layout.createSequentialGroup()
+                .addContainerGap()
+                .add(jPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 522, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
+                .add(jPanel3, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 522, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(layout.createSequentialGroup()
+                .addContainerGap()
+                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
+                    .add(jPanel3, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 523, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .add(jPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 523, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        pack();
+    }// </editor-fold>
+   
+    
+    public void run()
+    {
+    	 try
+         {
+         	readMOPSOData();
+         }
+         catch(Exception ex)
+         {
+         	System.out.println(ex.getMessage());
+         }
+    }
+    public static void main(String[] args)
+    {
+    	 MOPSO_CDRJFrame frameMopso_CDR;
+         frameMopso_CDR = new MOPSO_CDRJFrame();
+         frameMopso_CDR.setTitle("MOPSO_CDR (" + "AZT1" + ")");
+         frameMopso_CDR.setVisible(true);
+         frameMopso_CDR.run();
+    }
+
+  
+}

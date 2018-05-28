@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<config>
+	<network file="network.xml" ></network>
+	<map file="map.osm" ></map>
+	<plan file="transport_plan_holding.xml" ></plan>
+	<output folder="D:\transimOutput" output_data ="output.csv" overwrite_output="yes" ></output>
+	<historical_data host="localhost" data_source="wollongong_transit" username="root"  password="" ></historical_data>
+	<control_strategy file="control_strategy_holding.xml" ></control_strategy>
+
+</config> 

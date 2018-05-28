@@ -1,0 +1,50 @@
+import datetime
+from commandanalyzer import CommandAnalyzer
+
+class StopActivity:
+
+	def setSource(self,source):
+		self.source = source
+
+	def setDestination(self,destination):
+		self.destination = destination
+
+	def setStatus(self,status):
+		self.status = status
+
+	def setDateTime(self,datetime):
+		self.datetime = datetime
+
+	def setPassengerOn(self,passengerOn):
+		self.passengerOn = passengerOn
+
+	def setPassengerOff(self,passengerOff):
+		self.passengerOff = passengerOff
+
+
+#==================================================================
+class StopActivities:
+
+	def __init__ (self):
+		self.stopActivities = []
+
+	def add(self,command):
+		commandAnalyzer = CommandAnalyzer(command)
+		commandName = commandAnalyzer.getCommandName()
+		
+
+		if(commandName == 'gcounters'):
+			commandAnalyzer.getPassenger()
+			stopActivity = StopActivity()
+			stopActivity.setSource(commandAnalyzer.getSource())
+			stopActivity.setDestination(commandAnalyzer.getDestination())
+			stopActivity.setStatus('')
+			stopActivity.setDateTime(str(datetime.datetime.now()))
+			stopActivity.setPassengerOn(commandAnalyzer.getNumberPassengerOn())
+			stopActivity.setPassengerOff(commandAnalyzer.getNumberPassengerOff())
+			self.stopActivities.append(stopActivity)
+
+	def getStopActivities(self):
+		return self.stopActivities
+		
+	

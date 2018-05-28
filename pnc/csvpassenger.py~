@@ -1,0 +1,28 @@
+
+import csv, datetime
+from commandanalyzer import CommandAnalyzer
+
+class CSVPassenger:
+
+
+#===================================================================
+#Write
+#===================================================================
+	def write(self,stopActivities):
+		filename = 'log/pcn'+ datetime.datetime.now() +'.csv'
+		writer = csv.writer(open('log/pcn.csv','wb'), 
+                                    delimiter=',', quotechar='|', 
+                                    quoting=csv.QUOTE_MINIMAL)
+
+		for s in stopActivities:
+			writer.writerow([s.source,s.destination,s.status,s.datetime,s.passengerOn,s.passengerOff])
+		
+
+#===================================================================
+#Reader
+#===================================================================
+	def read(self):
+		with open('pcn.csv','rb') as f:
+			reader = csv.reader(f)
+			for row in reader:
+				print row
